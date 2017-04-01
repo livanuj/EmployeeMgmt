@@ -10,8 +10,17 @@ class ListingIssuesTest < ActionDispatch::IntegrationTest
 		get '/issues'
 
 		assert_equal 200, response.status
-		assert_equal Mime::JSON, response.content_type
+		assert_equal Mime[:json], response.content_type
 
 		assert_equal Issue.count, JSON.parse(response.body).size
+	end
+
+	test 'max hours worked' do
+		get '/issues?hour=8'
+
+		assert_equal 200, response.status
+		assert_equal Mime[:json], response.content_type
+
+		assert_equal 1, JSON.parse(response.body).size
 	end
 end
