@@ -22,7 +22,7 @@ class IssuesController < ApplicationController
   private
 
   def issue_params
-    params.require(:issue).permit(:issue, :hour)
+    params.require(:issue).permit(:issue, :hour, :description)
   end
 
 end

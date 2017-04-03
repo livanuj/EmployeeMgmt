@@ -4,7 +4,8 @@ class CreatingIssuesTest < ActionDispatch::IntegrationTest
   test 'creating new issues' do    
     post '/issues', params: { issue: {
       issue: 'task 1',
-      hour: 8
+      hour: 8,
+      description: 'working on test issue 1'
     } }.to_json, headers: { 'Accept' => 'application/json',
                            'Content-Type' => 'application/json' }
 
@@ -15,6 +16,7 @@ class CreatingIssuesTest < ActionDispatch::IntegrationTest
 
     assert_equal 'task 1', issue[:issue]
     assert_equal 8, issue[:hour].to_i
+    assert_equal 'working on test issue 1', issue[:description] 
   end
 
   test 'does not create issues with invalid data' do

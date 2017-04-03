@@ -12,6 +12,7 @@ class ListingIssuesTest < ActionDispatch::IntegrationTest
 		assert_equal 200, response.status
 		assert_equal Mime[:json], response.content_type
 
+    #byebug
 		assert_equal Issue.count, json(response.body).size
 	end
 
