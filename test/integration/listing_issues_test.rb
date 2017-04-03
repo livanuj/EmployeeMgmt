@@ -2,8 +2,10 @@ require 'test_helper'
 
 class ListingIssuesTest < ActionDispatch::IntegrationTest
 	setup do
-		Issue.create!(issue: "Test issue", hour: 8)
-		Issue.create!(issue: "Test issue 2", hour: 7)
+		@anuj = User.create!(name: "Anuj Shrestha", email: "livanuj@gmail.com")
+
+		@anuj.issues.create!(issue: "Test issue", hour: 8)
+		@anuj.issues.create!(issue: "Test issue 2", hour: 7)
 	end
 
 	test 'listing issues' do
@@ -13,7 +15,10 @@ class ListingIssuesTest < ActionDispatch::IntegrationTest
 		assert_equal Mime[:json], response.content_type
 
     #byebug
-		assert_equal Issue.count, json(response.body).size
+    issues = json(response.body)
+		assert_equal Issue.count, issues.size
+		issue = issues.first
+		assert_equal @anuj.id, issue[:user_id]
 	end
 
 	test 'max hours worked' do
